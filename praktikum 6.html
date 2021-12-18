@@ -1,0 +1,110 @@
+<html>
+    <head>
+    <title>PT. Once Sejahtera</title>
+    <style>
+            .table-zebra-striping 
+            {
+                width: 100%;
+            }
+
+.table-zebra-striping th {
+    background: #c4d48c;
+    color: #ffffff;
+    padding: 1em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.table-zebra-striping tr:nth-child(odd) {
+    background: #d5e8e1;
+}
+
+.table-zebra-striping tr:nth-child(even) {
+    background: #b0e4d2;
+}
+
+.table-zebra-striping td {
+    padding: 0.3em;
+}
+
+        </style>
+    </head>
+    <body style="background-color:powderblue;">
+        <h1 style="text-align:center;">PT Once Sejahtera</h1>
+        <input type="text" id="nama" placeholder="nama">
+        <input type="number" id="hari" placeholder="jumlah hari">
+        <select name="kategori" id="kategori">
+            <option value="sosial">Sosial</option>
+            <option value="rumah">Rumah</option>
+            <option value="apartmen">Apartemen</option>
+            <option value="villa">Villa</option>
+            <option value="industri">Industri</option>
+
+        </select>
+        <button onclick="myFunction()">Jumlahkan</button>
+        <div id="result"></div>
+        <script>
+            var arrays = [];
+            arrays['sosial'] = {kategori:"Sosial", abodemen:10000, tarif:300, pajak:0};
+            arrays['rumah'] = {kategori:"Rumah", abodemen:30000, tarif:500, pajak:0.1};
+            arrays['apartmen'] = {kategori:"Apartmen", abodemen:50000, tarif:750, pajak:0.15};
+            arrays['industri'] = {kategori:"Industri", abodemen:75000, tarif:1000, pajak:0.2};
+            arrays['villa'] = {kategori:"Villa", abodemen:100000, tarif:1250, pajak:0.25};
+
+            function myFunction() {
+                var nama = document.getElementById("nama").value
+                var hari = document.getElementById("hari").value;
+                var kategori = document.getElementById("kategori").value;
+                var data = arrays[kategori];
+                var subtotal = (hari*data.tarif)+data.abodemen
+                var pajak = (subtotal*data.pajak)
+                var bayar = subtotal+pajak
+                var html = "<table class='table-zebra-striping'>";
+                    html+="<tr>";
+                    html+="<td>Jumlah</td>";
+                    html+="<td>Abodemen</td>";
+                    html+="<td>Tarif per KWH</td>";
+                    html+="<td>Subtotal</td>";
+                    html+="</tr>";
+                
+                if(hari>30)
+                {
+                    var hari = document.getElementById("hari").value=1;
+                    for (let index = 1; index <= 1; index++)
+                    {
+                        index="Jumlah hari tidak valid";
+                        html+= "<td>"+index+"</td>";
+                    }
+                }
+
+                else if(hari == "" || nama == "")
+                {
+                    var hari = document.getElementById("hari").value=1;
+                    for (let index = 1; index <= 1; index++)
+                    {
+                        index="fields nama_fields harus diisi";
+                        html+= "<td>"+index+"</td>";
+                    }
+                }
+
+                else
+                {
+                    for (let index = 1; index <= hari; index++) {
+                        html+= "<tr>";
+                        html+= "<td>"+index+"</td>";
+                        html+= "<td>"+data.abodemen+"</td>";
+                        html+= "<td>"+data.tarif*index+"</td>";
+                        html+= "<td>"+(data.abodemen+(data.tarif*index))+"</td>";
+                        html+= "</tr>";
+                    }
+
+                    html+= "<tr><td colspan='4'> subtotal: "+subtotal+"</td></tr>";
+                    html+= "<tr><td colspan='4'> pajak: "+pajak+"</td></tr>";
+                    html+= "<tr><td colspan='4'> bayar: "+bayar+"</td></tr>";
+                    html+= "</table>";
+                }
+                document.getElementById("result").innerHTML=html
+            }
+        </script>
+    </body>
+</html>
